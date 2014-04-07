@@ -11,17 +11,20 @@
 ## Usage
 
 1. Download a template file from `templates/` that matches your needs and place it in your prototype's main directory. Here's the list of all currently available templates:
-  * iPhone 5s (White)
-  * iPhone 5s (Black)
-  * iPhone 5s (Gold)
-  * iPhone 5c (White)
-  * iPhone 5c (Blue)
-  * iPhone 5c (Green)
-  * iPhone 5c (Red)
-  * iPhone 5c (Yellow)
-  * iPad Mini (White, Landscape)
-  * iPad Mini (Black, Landscape)
-  * Nexus 5
+  * [iPhone 5s (White)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5s-white.js)
+  * [iPhone 5s (Black)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5s-black.js)
+  * [iPhone 5s (Gold)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5s-gold.js)
+  * [iPhone 5c (White)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5c-white.js)
+  * [iPhone 5c (Blue)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5c-blue.js)
+  * [iPhone 5c (Green)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5c-green.js)
+  * [iPhone 5c (Red)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5c-red.js)
+  * [iPhone 5c (Yellow)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/iphone-5c-yellow.js)
+  * [iPad Mini (White, Landscape)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/ipad-mini-white.js)
+  * [iPad Mini (Black, Landscape)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/ipad-mini-black.js)
+  * [Nexus 5](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/nexus-5.js)
+
+  *Note: If you don't want to bother downloading the templates, you can just copy one of the links above.*
+
 2. Open your `index.html` in a text editor and link to the template using a `<script>` tag. The template should be included *after* the `framer.js` script:
 
   ```html
