@@ -3,7 +3,7 @@
   var options = utils.defaults(config.template || {}, defaults);
 
   var body = document.body,
-      isMobile = navigator.userAgent.match(/(iPad|iPhone)/),
+      isMobile = navigator.userAgent.match(/(iPad|iPhone|Android)/),
       isStandalone = ('standalone' in navigator) && navigator.standalone,
       isPresentationMode = window.location.hash.indexOf('dev') === -1,
       deviceWidth = options.deviceWidth,
