@@ -22,7 +22,7 @@
   * iPad Mini (White, Landscape)
   * iPad Mini (Black, Landscape)
   * Nexus 5
-2. Open your `index.html` and link to the template using a `<script>` tag. The template should be included *after* the `framer.js` script:
+2. Open your `index.html` in a text editor and link to the template using a `<script>` tag. The template should be included *after* the `framer.js` script:
 
   ```html
   <script src="framer/framer.js"></script>
@@ -32,8 +32,16 @@
   <!-- Link to the template script: -->
   <script src="iphone-5s-white.js"></script>
   ```
+3. Load `index.html` in a browser. You should see your prototype appear inside the presentation template.
 
-3. Reload your browser. You should see your prototype appear inside the presentation template.
+## Setting the Background Image
+
+The default background image is a plain off-white color, but if that's not to your tastes, you can use your own by specifying it as a template option before you load the template:
+
+```html
+<script>config.template = { backgroundImage: '[url to your background image]' };</script>
+<script src="iphone-5s-white.js"></script>
+```
 
 ## "Add to Homescreen" Prompt
 
