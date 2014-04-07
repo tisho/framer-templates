@@ -45,6 +45,8 @@ The default background image is a plain off-white color, but if that's not to yo
 
 ## "Add to Homescreen" Prompt
 
+<img src="http://tisho.co/framer-templates/images/homescreen-prompt-screenshot.png" width="414">
+
 The templates have built-in capability for reminding users that view your prototype inside a mobile browser to add it to their homescreen for a more app-like experience. This feature is off by default, but you can turn it on like this:
 
 ```html
