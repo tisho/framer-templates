@@ -23,8 +23,6 @@
   * [iPad Mini (Black, Landscape)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/ipad-mini-black.js)
   * [Nexus 5](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/nexus-5.js)
 
-  *Note: If you don't want to bother downloading the templates, you can just copy one of the links above.*
-
 2. Open your `index.html` in a text editor and link to the template using a `<script>` tag. The template should be included *after* the `framer.js` script:
 
   ```html
