@@ -1,5 +1,7 @@
 # Framer Presentation Templates
 
+<img src="http://tisho.co/framer-templates/images/intro@2x.png" width="356">
+
 ## Features
 
 * When viewed on a desktop browser, your prototype will appear inside a device "frame", with an optional background behind it. The content of your prototype will be scaled to match the size of your browser window.
@@ -129,9 +131,13 @@ Let's go over the different attributes:
 
   This is the device image that will be used to "hold" your prototype. Make sure that the actual screen portion of the device is centered perfectly in the image (hint: use one of the existing images for a template).
 
-* `cursorImage1x` and `cursorImage2x` `(data URI, URL, or image path)` *Default:* a 32x32 bobble cursor.
+* `cursorImage1x` and `cursorImage2x` `(data URI, URL, or image path)` *Default:* a 66x66 bobble cursor.
 
   Custom cursor images in normal and retina resolutions.
+
+* `cursorPressedImage1x` and `cursorPressedImage2x` `(data URI, URL, or image path)` *Default:* a 66x66 bobble cursor.
+
+  Custom pressed state cursor images in normal and retina resolutions.
 
 **Note:** All image paths are automatically converted to data URIs, so that the template is self-contained.
 
