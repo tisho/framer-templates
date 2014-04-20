@@ -32,8 +32,11 @@
       cursorImage2x = options.cursorImage2x,
       shouldShowAddToHomescreenPrompt = options.shouldShowAddToHomescreenPrompt,
       addToHomescreenPromptImage = options.addToHomescreenPromptImage,
+      addToHomescreenPromptImageWidth,
+      addToHomescreenPromptImageHeight,
       promptAnchorTop = options.promptAnchorTop,
       promptAnchorLeft = options.promptAnchorLeft,
+      sidePadding = 0.1,
       viewportWidth,
       viewportHeight,
       root,
@@ -74,7 +77,12 @@
   function calculateScale() {
     viewportWidth = document.documentElement.clientWidth;
     viewportHeight = document.documentElement.clientHeight;
-    scale = viewportHeight / deviceHeight * 0.9;
+
+    if (deviceWidth > deviceHeight) {
+      scale = viewportWidth / deviceWidth * (1 - sidePadding);
+    } else {
+      scale = viewportHeight / deviceHeight * (1 - sidePadding);
+    }
   }
 
   function positionDeviceBackground() {
@@ -119,6 +127,18 @@
     }
   }
 
+  function loadAddToHomescreenPrompt() {
+    if (!shouldShowAddToHomescreenPrompt) return;
+
+    var img = new Image();
+    img.onload = function() {
+      addToHomescreenPromptImageWidth = img.width;
+      addToHomescreenPromptImageHeight = img.height;
+      showAddToHomescreenPrompt();
+    };
+    img.src = addToHomescreenPromptImage;
+  }
+
   function showAddToHomescreenPrompt() {
     if (!shouldShowAddToHomescreenPrompt) return;
 
@@ -132,12 +152,9 @@
       vpWidth = contentWidth;
     }
 
-    var vpToScreenRatio = vpWidth / screenWidth;
-    var img = new Image();
-    img.src = addToHomescreenPromptImage;
-
-    var promptWidth = img.width / 2,
-        promptHeight = img.height / 2;
+    var vpToScreenRatio = vpWidth / screenWidth,
+        promptWidth = addToHomescreenPromptImageWidth / 2,
+        promptHeight = addToHomescreenPromptImageHeight / 2;
 
     promptAnchorTop = (promptAnchorTop / 2) * vpToScreenRatio;
     promptAnchorLeft = (promptAnchorLeft / 2) * vpToScreenRatio;
@@ -217,7 +234,7 @@
   function initialize() {
     if(isMobile) {
       if (!isStandalone) {
-        utils.delay(10, showAddToHomescreenPrompt);
+        utils.delay(10, loadAddToHomescreenPrompt);
       }
     } else {
       isPresentationMode = !isPresentationMode;

@@ -43,7 +43,9 @@ build = (template, configFile) ->
     config[k] = imageToDataURI(image)
 
   result = template.replace(/<%\s*template_defaults\s*%>/, JSON.stringify(config, null, '\t'))
+  log "Writing file #{filename}", bold
   fs.writeFileSync(filename, result)
+  log "File written #{filename}", bold
 
 # Tasks
 # ------------------------------------------------------------------------------
