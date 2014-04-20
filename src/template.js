@@ -17,6 +17,8 @@
       deviceImage = options.deviceImage,
       cursorImage1x = options.cursorImage1x,
       cursorImage2x = options.cursorImage2x,
+      cursorPressedImage1x = options.cursorPressedImage1x,
+      cursorPressedImage2x = options.cursorPressedImage2x,
       shouldShowAddToHomescreenPrompt = options.shouldShowAddToHomescreenPrompt,
       addToHomescreenPromptImage = options.addToHomescreenPromptImage,
       addToHomescreenPromptImageWidth,
@@ -57,7 +59,12 @@
       cursor: '-webkit-image-set(url(' + cursorImage1x + ') 1x, url(' + cursorImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto'
     };
 
+    var pressedProperties = {
+      cursor: '-webkit-image-set(url(' + cursorPressedImage1x + ') 1x, url(' + cursorPressedImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto'
+    };
+
     addStyle('.framer-template-decorated-body { '+ objectToCSS(properties) +' }');
+    addStyle('.framer-template-decorated-body:active { '+ objectToCSS(pressedProperties) +' }');
     document.body.classList.add('framer-template-decorated-body');
   }
 

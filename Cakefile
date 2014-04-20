@@ -38,7 +38,7 @@ build = (template, configFile) ->
   config = JSON.parse(fs.readFileSync(configFile).toString())
 
   # convert image paths in config to Data URI
-  for k, v of config when k.match(/image$/i) and v.length > 0 and !v.match(/^(data|https?):/)
+  for k, v of config when k.match(/image(1x|2x)?$/i) and v.length > 0 and !v.match(/^(data|https?):/)
     image = path.join(path.dirname(configFile), v)
     config[k] = imageToDataURI(image)
 
