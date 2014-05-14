@@ -49,6 +49,25 @@
       root,
       scale;
 
+  // We need to patch the default centerFrame method, because it uses the
+  // window's innerWidth/innerHeight to figure out where the center of the screen is.
+  // Since in our templates the "screen" is the screen in the template, we need to
+  // override the method to use contentWidth/contentHeight instead.
+  Layer.prototype.centerFrame = function() {
+    var frame;
+    if (this.superLayer) {
+      frame = this.frame;
+      frame.midX = parseInt(this.superLayer.width / 2.0);
+      frame.midY = parseInt(this.superLayer.height / 2.0);
+      return frame;
+    } else {
+      frame = this.frame;
+      frame.midX = parseInt(contentWidth / 2.0);
+      frame.midY = parseInt(contentHeight / 2.0);
+      return frame;
+    }
+  };
+
   function addStyle(css) {
     var styleSheet = document.createElement('style');
     styleSheet.innerHTML = css;
@@ -102,7 +121,7 @@
   }
 
   function positionFramerRoot() {
-    root = Framer._rootElement;
+    root = document.getElementById('FramerRoot');
     if (!root) {
       return setTimeout(positionFramerRoot, 10);
     }
@@ -182,23 +201,25 @@
     var bgTop = targetPointTop - promptAnchorTop,
         bgLeft = targetPointLeft - promptAnchorLeft;
 
-    var overlay = new View({
+    var overlay = new Layer({
       x: 0,
       y: 0,
       width: contentWidth,
       height: contentHeight,
-      style: { backgroundColor: 'rgba(0, 0, 0, 0.50)' }
+      backgroundColor: 'rgba(0, 0, 0, 0.50)'
     });
     overlay.index = 9999;
 
-    var view = new ImageView({
+    var view = new Layer({
       y: bgTop,
       x: bgLeft,
       width: promptWidth * vpToScreenRatio,
       height: promptHeight * vpToScreenRatio,
       image: addToHomescreenPromptImage,
       scale: 0.35,
-      opacity: 0
+      opacity: 0,
+      originX: promptAnchorLeft / (promptWidth * vpToScreenRatio),
+      originY: promptAnchorTop / (promptHeight * vpToScreenRatio)
     });
     view.index = 9999;
 
@@ -207,8 +228,7 @@
         scale: 1,
         opacity: 1
       },
-      origin: promptAnchorLeft + 'px ' + promptAnchorTop + 'px',
-      curve: 'spring(300, 20, 200)'
+      curve: 'spring(300, 20, 0)'
     });
 
     view.on(Events.TouchStart, function() {
@@ -217,8 +237,7 @@
           scale: 0.35,
           opacity: 0
         },
-        origin: promptAnchorLeft + 'px ' + promptAnchorTop + 'px',
-        curve: 'spring(300, 20, 200)'
+        curve: 'spring(300, 20, 0)'
       }).on('end', function() { view.destroy(); });
 
       overlay.animate({
@@ -246,7 +265,7 @@
   function initialize() {
     if(isMobile) {
       if (!isStandalone) {
-        utils.delay(10, loadAddToHomescreenPrompt);
+        setTimeout(loadAddToHomescreenPrompt, 10);
       }
     } else {
       isPresentationMode = !isPresentationMode;

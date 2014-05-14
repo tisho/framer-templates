@@ -48,12 +48,18 @@
   ```
 3. Load `index.html` in a browser. You should see your prototype appear inside the presentation template.
 
+## A Note on Compatibility
+
+The presentation templates are fully compatible with Framer 3. Older versions are not supported, but you can still download the old, Framer 2 compatible version of the templates from here: [link to old templates].
+
+If you're upgrading from a Framer 2 template, everything should work as expected by just replacing the template file. If you've used the `config.template = { ... }` syntax to customize the appearance of your template, you should change it to `Framer.Config.template = { ... }`.
+
 ## Setting the Background Image
 
 The default background image is a plain off-white color, but if that's not to your tastes, you can use your own by specifying it as a template option before you load the template:
 
 ```html
-<script>config.template = { backgroundImage: '[url to your background image]' };</script>
+<script>Framer.Config.template = { backgroundImage: '[url to your background image]' };</script>
 <script src="iphone-5s-white.js"></script>
 ```
 
@@ -64,7 +70,7 @@ The default background image is a plain off-white color, but if that's not to yo
 The templates have built-in capability for reminding users that view your prototype inside a mobile browser to add it to their homescreen for a more app-like experience. This feature is off by default, but you can turn it on like this:
 
 ```html
-<script>config.template = { shouldShowAddToHomescreenPrompt: true };</script>
+<script>Framer.Config.template = { shouldShowAddToHomescreenPrompt: true };</script>
 <script src="iphone-5s-white.js"></script>
 ```
 
