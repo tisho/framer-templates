@@ -50,7 +50,7 @@
 
 ## A Note on Compatibility
 
-The presentation templates are fully compatible with Framer 3. Older versions are not supported, but you can still download the old, Framer 2 compatible version of the templates from here: [link to old templates].
+The presentation templates are fully compatible with Framer 3. You can still download the old, Framer 2 compatible version of the templates from here: [Download Framer 2 Templates](http://tisho.co/framer-templates/legacy/framer-2-templates.zip).
 
 If you're upgrading from a Framer 2 template, everything should work as expected by just replacing the template file. If you've used the `config.template = { ... }` syntax to customize the appearance of your template, you should change it to `Framer.Config.template = { ... }`.
 
