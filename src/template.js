@@ -1,6 +1,6 @@
 (function() {
   var defaults = <% template_defaults %>;
-  var options = utils.defaults(config.template || {}, defaults);
+  var options = _.defaults(Framer.Config.template || {}, defaults);
 
   var body = document.body,
       isMobile = navigator.userAgent.match(/(iPad|iPhone|Android)/),
