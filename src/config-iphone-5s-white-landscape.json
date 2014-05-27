@@ -1,5 +1,6 @@
 {
   "backgroundImage": "",
+  "preventBounce": true,  
   "shouldShowAddToHomescreenPrompt": false,
   "deviceWidth": 805,
   "deviceHeight": 385,

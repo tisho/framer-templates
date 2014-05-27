@@ -1,6 +1,7 @@
 (function() {
   var defaults = {
 	"backgroundImage": "",
+	"preventBounce": true,
 	"shouldShowAddToHomescreenPrompt": false,
 	"deviceWidth": 385,
 	"deviceHeight": 805,
@@ -20,7 +21,7 @@
 };
   var options = _.defaults(Framer.Config.template || {}, defaults);
 
-  var body = document.body,
+  var body,
       isMobile = navigator.userAgent.match(/(iPad|iPhone|Android)/),
       isStandalone = ('standalone' in navigator) && navigator.standalone,
       isPresentationMode = window.location.hash.indexOf('dev') === -1,
@@ -43,6 +44,7 @@
       addToHomescreenPromptImageHeight,
       promptAnchorTop = options.promptAnchorTop,
       promptAnchorLeft = options.promptAnchorLeft,
+      preventBounce = options.preventBounce,
       sidePadding = 0.1,
       viewportWidth,
       viewportHeight,
@@ -249,6 +251,82 @@
     });
   }
 
+  function preventScrollBounce() {
+    patchScrollingLayers();
+    preventScrollingOnRootElement();
+  }
+
+  function preventScrollingOnRootElement() {
+    root = document.getElementById('FramerRoot');
+    if (!root) {
+      return setTimeout(preventScrollingOnRootElement, 10);
+    }
+
+    var properties = {
+      width: contentWidth + 'px',
+      height: contentHeight + 'px',
+      position: 'absolute',
+      left: 0,
+      top: 0
+    };
+
+    addStyle('.framer-template-scroll-fix { ' + objectToCSS(properties) +' }');
+    root.classList.add('framer-template-scroll-fix');
+
+    root.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+    });
+  }
+
+  function patchScrollingLayers() {
+    var originalSetPropertyValue = Layer.prototype._setPropertyValue;
+
+    Layer.prototype._setPropertyValue = function(k, v) {
+      if (k === 'scrollVertical') {
+        // We're checking for the existence of _eventListener, because
+        // Framer seems to throw an exception if you try to remove a listener
+        // that hasn't been added in the first place.
+        if (this._eventListeners) {
+          this.off('touchmove', handleScrollingLayerTouchMove);
+          this.off('touchstart', handleScrollingLayerTouchStart);
+        }
+
+        if (v) {
+          this.on('touchmove', handleScrollingLayerTouchMove);
+          this.on('touchstart', handleScrollingLayerTouchStart);
+        }
+      }
+
+      originalSetPropertyValue.call(this, k, v);
+    }
+
+    // Patch layers that have already been initialized
+    var layers = Framer.Session._LayerList, i = layers.length;
+    while(i--) {
+      layers[i]._setPropertyValue = Layer.prototype._setPropertyValue.bind(layers[i]);
+      if(layers[i].scrollVertical) {
+        layers[i].scrollVertical = layers[i].scrollVertical;
+      }
+    }
+  }
+
+  function handleScrollingLayerTouchMove(event) {
+    event.stopPropagation();
+  }
+
+  function handleScrollingLayerTouchStart(event) {
+    var element = this._element,
+        startTopScroll = element.scrollTop;
+
+    if (startTopScroll <= 0) {
+      element.scrollTop = 1;
+    }
+
+    if (startTopScroll + element.offsetHeight >= element.scrollHeight) {
+      element.scrollTop = element.scrollHeight - element.offsetHeight - 1;
+    }
+  }
+
   function layout() {
     calculateScale();
     positionDeviceBackground();
@@ -263,9 +341,15 @@
   }
 
   function initialize() {
+    body = document.body;
+
     if(isMobile) {
       if (!isStandalone) {
         setTimeout(loadAddToHomescreenPrompt, 10);
+      }
+
+      if(preventBounce) {
+        preventScrollBounce();
       }
     } else {
       isPresentationMode = !isPresentationMode;
@@ -275,5 +359,5 @@
     window.addEventListener('keydown', handleKeydown, false);
   }
 
-  initialize();
+  Utils.domComplete(initialize);
 })();
