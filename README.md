@@ -105,6 +105,10 @@ Let's go over the different attributes:
 
   An image that will be placed behind the device image.
 
+* `preventBounce` `(true or false)` *Default:* true
+
+  Prevents the entire page from bouncing when scrolled up/down (will also prevent scrolling beyond the content boundaries).
+
 * `shouldShowAddToHomescreenPrompt` `(true or false)` *Default:* false
 
   Specifies whether an "add to homescreen" prompt should be shown when the prototype is viewed on an iOS device, but not in homescreen standalone app mode.
