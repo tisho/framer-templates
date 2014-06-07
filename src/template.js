@@ -126,7 +126,8 @@
 
   function togglePresentationMode() {
     if (isPresentationMode) {
-      document.body.classList.remove('framer-template-decorated-body')
+      document.body.classList.remove('framer-template-decorated-body');
+      document.body.style.backgroundSize = '';
       if (root) {
         root.classList.remove('framer-template-positioned')
       }
