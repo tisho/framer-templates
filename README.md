@@ -5,10 +5,11 @@
 ## Features
 
 * When viewed on a desktop browser, your prototype will appear inside a device "frame", with an optional background behind it. The content of your prototype will be scaled to match the size of your browser window.
-* When viewed on a mobile device, the frame disappears, so your prototype can feel like a real app.
+* When viewed on a mobile device, the frame disappears, so your prototype can feel like a real app. As a bonus, Mobile Safari's bouncy scrolling is also prevented automatically.
 * Self-contained. All you need to do is link to a script. No need to bother with additional assets or write code.
 * Option to prompt users to add the prototype as an app on their homescreen before using it.
 * Switch between presentation and development mode by pressing `Alt + P`.
+* Switch between zoom levels with `Alt + 1` (100%), `Alt + 2` (75%), `Alt + 3` (50%), `Alt + 4` (25%), `Alt + 0` (Fit to Screen). You can also use `Alt + -` to zoom out and `Alt + =` to zoom in.
 
 ## Usage
 

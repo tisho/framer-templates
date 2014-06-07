@@ -46,6 +46,9 @@
       promptAnchorLeft = options.promptAnchorLeft,
       preventBounce = options.preventBounce,
       sidePadding = 0.1,
+      scaleOverriddenByZoomFactor = false,
+      zoomControlElement,
+      zoomFactor,
       viewportWidth,
       viewportHeight,
       root,
@@ -328,16 +331,128 @@
     }
   }
 
+  function zoomTo(factor) {
+    scaleOverriddenByZoomFactor = true;
+    scale = factor / (screenWidth/contentWidth);
+    zoomFactor = factor;
+
+    layout();
+    updateZoomControl();
+  }
+
+  function zoomToFit() {
+    scaleOverriddenByZoomFactor = false;
+    layout();
+    updateZoomControl();
+  }
+
+  function zoomIn() {
+    zoomFactorFromScale = scale * (screenWidth/contentWidth);
+
+    if (zoomFactorFromScale >= 2) {
+      zoomToFit();
+    } else {
+      targetZoomFactor = zoomFactorFromScale + 0.25 - (zoomFactorFromScale % 0.25)
+      zoomTo(targetZoomFactor);
+    }
+  }
+
+  function zoomOut() {
+    zoomFactorFromScale = scale * (screenWidth/contentWidth);
+
+    if (zoomFactorFromScale <= 0.25) {
+      zoomToFit();
+    } else {
+      if (zoomFactorFromScale % 0.25) {
+        targetZoomFactor = zoomFactorFromScale - (zoomFactorFromScale % 0.25)
+      } else {
+        targetZoomFactor = zoomFactorFromScale - 0.25;
+      }
+
+      zoomTo(targetZoomFactor);
+    }
+  }
+
+  function updateZoomControl() {
+    if (!zoomControlElement) {
+      zoomControlElement = document.createElement('span');
+      zoomControlElement.className = 'framer-template-zoom-control'
+
+      var properties = {
+        position: 'fixed',
+        right: '20px',
+        bottom: '20px',
+        background: 'rgba(0, 0, 0, 0.45)',
+        'border-radius': '3px',
+        'color': '#fff',
+        padding: '4px 6px',
+        opacity: '0.35',
+        font: 'normal 14px/20px sans-serif',
+        '-webkit-transition': 'all 0.35s'
+      };
+
+      var hoverProperties = {
+        opacity: 1
+      };
+
+      addStyle('.framer-template-zoom-control { ' + objectToCSS(properties) +' }');
+      addStyle('.framer-template-zoom-control:hover { ' + objectToCSS(hoverProperties) +' }');
+      document.body.appendChild(zoomControlElement);
+    }
+
+    if (scaleOverriddenByZoomFactor) {
+      zoomControlElement.innerHTML = Math.round(zoomFactor * 100) + '%';
+    } else {
+      zoomControlElement.innerHTML = 'Fit to Screen';
+    }
+
+  }
+
   function layout() {
-    calculateScale();
+    if (!scaleOverriddenByZoomFactor) {
+      calculateScale();
+    }
+
     positionDeviceBackground();
     positionFramerRoot();
   }
 
   function handleKeydown() {
-    var key = String.fromCharCode(event.which).toLowerCase();
+    var charCode = event.which,
+        key = String.fromCharCode(charCode).toLowerCase();
+
     if(event.altKey && key === 'p') {
       togglePresentationMode();
+    }
+
+    if(event.altKey && key === '1') {
+      zoomTo(1);
+    }
+
+    if(event.altKey && key === '2') {
+      zoomTo(0.75);
+    }
+
+    if(event.altKey && key === '3') {
+      zoomTo(0.5);
+    }
+
+    if(event.altKey && key === '4') {
+      zoomTo(0.25);
+    }
+
+    if(event.altKey && key === '0') {
+      zoomToFit();
+    }
+
+    // Alt -
+    if(event.altKey && charCode === 189) {
+      zoomOut();
+    }
+
+    // Alt +
+    if(event.altKey && charCode === 187) {
+      zoomIn();
     }
   }
 

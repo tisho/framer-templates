@@ -62,8 +62,18 @@ task 'build', 'Build template files', ->
 
   glob 'src/config-*.json', (err, files) ->
     build(template, configFile) for configFile in files
-    
+
     # copy blue iphone template to example dir
     fs.createReadStream('templates/iphone-5c-blue.js').pipe(fs.createWriteStream('example/iphone-5c-blue.js'))
 
     log '\nAll done. Have a nice day!', bold
+
+task 'watch', 'Watch for changes and build template files', ->
+  log 'watch', green, 'Building all templates...'
+  invoke 'build'
+
+  log 'watch', green, 'Watching the src/ directory for changes...'
+
+  fs.watch 'src', (event, filename) ->
+    log 'watch', green, "Changed file #{filename}, rebuilding..."
+    invoke 'build'
