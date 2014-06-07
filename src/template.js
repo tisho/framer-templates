@@ -285,12 +285,14 @@
       originalSetPropertyValue.call(this, k, v);
     }
 
-    // Patch layers that have already been initialized
-    var layers = Framer.Session._LayerList, i = layers.length;
-    while(i--) {
-      layers[i]._setPropertyValue = Layer.prototype._setPropertyValue.bind(layers[i]);
-      if(layers[i].scrollVertical) {
-        layers[i].scrollVertical = layers[i].scrollVertical;
+    if (Framer.Session) {
+      // Patch layers that have already been initialized
+      var layers = Framer.Session._LayerList, i = layers.length;
+      while(i--) {
+        layers[i]._setPropertyValue = Layer.prototype._setPropertyValue.bind(layers[i]);
+        if(layers[i].scrollVertical) {
+          layers[i].scrollVertical = layers[i].scrollVertical;
+        }
       }
     }
   }
