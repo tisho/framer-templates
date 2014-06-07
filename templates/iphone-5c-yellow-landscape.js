@@ -359,5 +359,10 @@
     window.addEventListener('keydown', handleKeydown, false);
   }
 
-  Utils.domComplete(initialize);
+  if(document.body) {
+    console.log('body is already present, initializing')
+    initialize();
+  } else {
+    Utils.domComplete(initialize);
+  }
 })();

@@ -53,6 +53,7 @@ build = (template, configFile) ->
 task 'clean', 'Clean existing template files', ->
   log 'clean', green, 'Cleaning out templates directory...'
   exec 'rm -rf templates/*'
+  exec 'rm example/iphone-5c-blue.js'
 
 task 'build', 'Build template files', ->
   invoke 'clean'
@@ -61,4 +62,8 @@ task 'build', 'Build template files', ->
 
   glob 'src/config-*.json', (err, files) ->
     build(template, configFile) for configFile in files
+    
+    # copy blue iphone template to example dir
+    fs.createReadStream('templates/iphone-5c-blue.js').pipe(fs.createWriteStream('example/iphone-5c-blue.js'))
+
     log '\nAll done. Have a nice day!', bold
