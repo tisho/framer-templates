@@ -155,6 +155,7 @@
       }
 
       window.removeEventListener('resize', layout, false);
+      scale = 1 / (screenWidth / contentWidth);
       isPresentationMode = false;
     } else {
       showDeviceBackground();
@@ -316,6 +317,21 @@
     }
   }
 
+  // Ensures that the clientX and clientY we get from touch events
+  // respect the current zoom level. Makes it possible for draggables to
+  // accurately track touch events.
+
+  function patchTouchEvents() {
+    var originalTouchEvent = Events.touchEvent;
+    Events.touchEvent = function(event) {
+      var e = _.extend({}, originalTouchEvent(event));
+      var zoomFactorFromScale = scale * (screenWidth/contentWidth);
+      e.clientX = e.clientX / zoomFactorFromScale;
+      e.clientY = e.clientY / zoomFactorFromScale;
+      return e;
+    }
+  }
+
   function handleScrollingLayerTouchMove(event) {
     event.stopPropagation();
   }
@@ -349,7 +365,7 @@
   }
 
   function zoomIn() {
-    zoomFactorFromScale = scale * (screenWidth/contentWidth);
+    var zoomFactorFromScale = scale * (screenWidth/contentWidth);
 
     if (zoomFactorFromScale >= 2) {
       zoomToFit();
@@ -360,7 +376,7 @@
   }
 
   function zoomOut() {
-    zoomFactorFromScale = scale * (screenWidth/contentWidth);
+    var zoomFactorFromScale = scale * (screenWidth/contentWidth);
 
     if (zoomFactorFromScale <= 0.25) {
       zoomToFit();
@@ -472,6 +488,7 @@
     } else {
       isPresentationMode = !isPresentationMode;
       togglePresentationMode();
+      patchTouchEvents();
     }
 
     window.addEventListener('keydown', handleKeydown, false);
