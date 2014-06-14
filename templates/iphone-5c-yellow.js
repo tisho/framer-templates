@@ -25,6 +25,7 @@
       isMobile = navigator.userAgent.match(/(iPad|iPhone|Android)/),
       isStandalone = ('standalone' in navigator) && navigator.standalone,
       isPresentationMode = window.location.hash.indexOf('dev') === -1,
+      zoomFactorInHash = window.location.hash.match(/z(\d+)/),
       deviceWidth = options.deviceWidth,
       deviceHeight = options.deviceHeight,
       screenWidth = options.screenWidth,
@@ -45,14 +46,18 @@
       promptAnchorTop = options.promptAnchorTop,
       promptAnchorLeft = options.promptAnchorLeft,
       preventBounce = options.preventBounce,
-      sidePadding = 0.1,
-      scaleOverriddenByZoomFactor = false,
       zoomControlElement,
-      zoomFactor,
-      viewportWidth,
-      viewportHeight,
+      zoomFactor = (zoomFactorInHash ? parseInt(zoomFactorInHash[1])/100 : null) || options.zoomFactor,
+      scaleOverriddenByZoomFactor = !!zoomFactor,
+      viewportWidth = document.documentElement.clientWidth,
+      viewportHeight = document.documentElement.clientHeight,
+      sidePadding = 50,
       root,
       scale;
+
+  if (scaleOverriddenByZoomFactor) {
+    scale = zoomFactor / (screenWidth / contentWidth);
+  }
 
   // We need to patch the default centerFrame method, because it uses the
   // window's innerWidth/innerHeight to figure out where the center of the screen is.
@@ -111,17 +116,20 @@
   }
 
   function calculateScale() {
-    viewportWidth = document.documentElement.clientWidth;
-    viewportHeight = document.documentElement.clientHeight;
-
     if (deviceWidth > deviceHeight) {
-      scale = viewportWidth / deviceWidth * (1 - sidePadding);
+      scale = viewportWidth / (deviceWidth + 2 * sidePadding);
     } else {
-      scale = viewportHeight / deviceHeight * (1 - sidePadding);
+      scale = viewportHeight / (deviceHeight + 2 * sidePadding);
     }
   }
 
   function positionDeviceBackground() {
+    var top = (viewportHeight - deviceHeight * scale) / 2,
+        left = (viewportWidth - deviceWidth * scale) / 2;
+
+    top = top < sidePadding ? sidePadding : top;
+
+    body.style.backgroundPosition = left + 'px ' + top + 'px, 50% 50%';
     body.style.backgroundSize = deviceWidth * scale + 'px ' + deviceHeight * scale + 'px, cover';
   }
 
@@ -131,12 +139,18 @@
       return setTimeout(positionFramerRoot, 10);
     }
 
+    var deviceTop = (viewportHeight - deviceHeight * scale) / 2;
+    deviceTop = deviceTop < sidePadding ? sidePadding : deviceTop;
+
+    var top = deviceTop + (deviceHeight - screenHeight) * scale / 2,
+        left = (viewportWidth - screenWidth * scale)/2;
+
     var properties = {
       width: contentWidth + 'px',
       height: contentHeight + 'px',
       position: 'absolute',
-      left: (viewportWidth - screenWidth * scale)/2+'px',
-      top: (viewportHeight - screenHeight * scale)/2+'px',
+      left: left+'px',
+      top: top+'px',
       '-webkit-transform': 'scale(' + screenWidth/contentWidth * scale + ')',
       '-webkit-transform-origin': '0 0',
       'overflow': 'hidden'
@@ -144,6 +158,8 @@
 
     addStyle('.framer-template-positioned { ' + objectToCSS(properties) +' }');
     root.classList.add('framer-template-positioned');
+
+    document.body.style.minHeight = (deviceHeight * scale + 2 * sidePadding)+'px';
   }
 
   function togglePresentationMode() {
@@ -160,6 +176,11 @@
     } else {
       showDeviceBackground();
       layout();
+
+      if (scaleOverriddenByZoomFactor) {
+        updateZoomControl();
+      }
+
       window.addEventListener('resize', layout, false);
       isPresentationMode = true;
     }
@@ -427,6 +448,9 @@
   }
 
   function layout() {
+    viewportWidth = document.documentElement.clientWidth;
+    viewportHeight = document.documentElement.clientHeight;
+
     if (!scaleOverriddenByZoomFactor) {
       calculateScale();
     }
@@ -439,38 +463,40 @@
     var charCode = event.which,
         key = String.fromCharCode(charCode).toLowerCase();
 
-    if(event.altKey && key === 'p') {
+    if (event.altKey && key === 'p') {
       togglePresentationMode();
     }
 
-    if(event.altKey && key === '1') {
-      zoomTo(1);
-    }
+    if (event.altKey && isPresentationMode) {
+      if(key === '1') {
+        zoomTo(1);
+      }
 
-    if(event.altKey && key === '2') {
-      zoomTo(0.75);
-    }
+      if(key === '2') {
+        zoomTo(0.75);
+      }
 
-    if(event.altKey && key === '3') {
-      zoomTo(0.5);
-    }
+      if(key === '3') {
+        zoomTo(0.5);
+      }
 
-    if(event.altKey && key === '4') {
-      zoomTo(0.25);
-    }
+      if(key === '4') {
+        zoomTo(0.25);
+      }
 
-    if(event.altKey && key === '0') {
-      zoomToFit();
-    }
+      if(key === '0') {
+        zoomToFit();
+      }
 
-    // Alt -
-    if(event.altKey && charCode === 189) {
-      zoomOut();
-    }
+      // Alt -
+      if(charCode === 189) {
+        zoomOut();
+      }
 
-    // Alt +
-    if(event.altKey && charCode === 187) {
-      zoomIn();
+      // Alt +
+      if(charCode === 187) {
+        zoomIn();
+      }
     }
   }
 

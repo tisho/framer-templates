@@ -75,6 +75,11 @@ The templates have built-in capability for reminding users that view your protot
 <script src="iphone-5s-white.js"></script>
 ```
 
+## Tips
+
+* Append `#dev` to the URL of your prototype to load it directly in developer mode (no device frame, scaled to 100%). E.g. `http://localhost/prototype/index.html#dev`
+* Append `#z75` to the URL of your prototype to load it at 75% scale. Putting any number after the `z` will work.  E.g. `http://localhost/prototype/index.html#z75`
+
 ## Building Your Own Template
 
 All templates use the same basic code, but vary in configuration, depending on which device you want to use to present your prototype.
@@ -125,6 +130,14 @@ Let's go over the different attributes:
 * `contentWidth` and `contentHeight` `(number)`
 
   The size of your actual prototype. This is usually the screen size multiplied by 2. By default, Framer's template assumes that your content is 640px wide (iPhone sized).
+
+* `sidePadding` `(number)` *Default:* 50
+
+  The minimum amount of padding (in *px*) you want to leave between the edges of the browser window and the device image.
+
+* `zoomFactor` (number) *Default:* *not set*
+
+  A specific zoom factor to use, instead of automatically re-scaling your prototype to fit inside your browser window. A zoom factor of `0.75` would mean `75%`, a factor of `2` would mean `200%`.
 
 * `cursorWidth` `(number)`
 
