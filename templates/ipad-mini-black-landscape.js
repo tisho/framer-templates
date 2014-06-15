@@ -345,10 +345,22 @@
   function patchTouchEvents() {
     var originalTouchEvent = Events.touchEvent;
     Events.touchEvent = function(event) {
-      var e = _.extend({}, originalTouchEvent(event));
-      var zoomFactorFromScale = scale * (screenWidth/contentWidth);
-      e.clientX = e.clientX / zoomFactorFromScale;
-      e.clientY = e.clientY / zoomFactorFromScale;
+      var e = originalTouchEvent(event);
+      var zoomFactorFromScale = scale * (screenWidth/contentWidth),
+          clientX = e.clientX / zoomFactorFromScale,
+          clientY = e.clientY / zoomFactorFromScale;
+
+      var descriptor = Object.getOwnPropertyDescriptor(e, 'clientX');
+
+      if (!descriptor || (descriptor && descriptor.writable)) {
+        Object.defineProperty(e, 'clientX', { get: function() { return clientX; } });
+        Object.defineProperty(e, 'clientY', { get: function() { return clientY; } });
+      } else {
+        e = _.extend({}, e);
+        e.clientX = clientX;
+        e.clientY = clientY;
+      }
+
       return e;
     }
   }
