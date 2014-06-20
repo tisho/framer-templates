@@ -1,0 +1,19 @@
+{
+  "name": "framer-templates",
+  "version": "1.0.0",
+  "main": "templates/iphone-5c-blue.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "src",
+    "example",
+    "Cakefile",
+    "*.md",
+    "package.json"
+  ],
+  "keywords": [
+    "framer",
+    "templates",
+    "prototyping"
+  ]
+}
