@@ -49,6 +49,16 @@
   ```
 3. Load `index.html` in a browser. You should see your prototype appear inside the presentation template.
 
+## Installing with Bower
+
+You can use [bower](http://bower.io) to install and keep the templates up to date:
+
+```
+bower install framer-templates
+```
+
+All of the available templates will be installed to `bower_components/framer-templates/templates`.
+
 ## A Note on Compatibility
 
 The presentation templates are fully compatible with Framer 3. You can still download the old, Framer 2 compatible version of the templates from here: [Download Framer 2 Templates](http://tisho.co/framer-templates/legacy/framer-2-templates.zip).
