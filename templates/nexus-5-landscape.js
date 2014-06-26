@@ -100,11 +100,11 @@
       'background-position': '50% 50%',
       'background-image': 'url(' + deviceImage + '), url(' + backgroundImage + ')',
       'background-color': '#f4f4f4',
-      cursor: '-webkit-image-set(url(' + cursorImage1x + ') 1x, url(' + cursorImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto'
+      cursor: '-webkit-image-set(url(' + cursorImage1x + ') 1x, url(' + cursorImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto !important'
     };
 
     var pressedProperties = {
-      cursor: '-webkit-image-set(url(' + cursorPressedImage1x + ') 1x, url(' + cursorPressedImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto'
+      cursor: '-webkit-image-set(url(' + cursorPressedImage1x + ') 1x, url(' + cursorPressedImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto !important'
     };
 
     addStyle('.framer-template-decorated-body { '+ objectToCSS(properties) +' }');
@@ -146,14 +146,20 @@
       width: contentWidth + 'px',
       height: contentHeight + 'px',
       position: 'absolute',
-      left: left+'px',
-      top: top+'px',
+      left: left+'px !important',
+      top: top+'px !important',
       '-webkit-transform': 'scale(' + screenWidth/contentWidth * scale + ')',
       '-webkit-transform-origin': '0 0',
-      'overflow': 'hidden'
+      'overflow': 'hidden',
+      cursor: '-webkit-image-set(url(' + cursorImage1x + ') 1x, url(' + cursorImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto !important'
+    };
+
+    var pressedProperties = {
+      cursor: '-webkit-image-set(url(' + cursorPressedImage1x + ') 1x, url(' + cursorPressedImage2x + ') 2x) ' + cursorWidth/2 + ' ' + cursorWidth / 2 + ', auto !important'
     };
 
     addStyle('.framer-template-positioned { ' + objectToCSS(properties) +' }');
+    addStyle('.framer-template-positioned:active { ' + objectToCSS(pressedProperties) +' }');
     root.classList.add('framer-template-positioned');
 
     document.body.style.minHeight = (deviceHeight * scale + 2 * sidePadding)+'px';
@@ -517,7 +523,7 @@
         setTimeout(loadAddToHomescreenPrompt, 10);
       }
 
-      if(preventBounce) {
+      if(!(Framer.Extras && Framer.Extras.MobileScrollFix) && preventBounce) {
         preventScrollBounce();
       }
     } else {

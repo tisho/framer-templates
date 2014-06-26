@@ -49,6 +49,18 @@
   ```
 3. Load `index.html` in a browser. You should see your prototype appear inside the presentation template.
 
+## Usage with Framer Studio
+
+1. Download one of the templates and place it in the folder of your project, under `framer/`.
+
+2. Put this at the top of your script:
+
+  ```coffeescript
+  Utils.domLoadScriptSync('framer/iphone-5c-blue-landscape.js')
+  ```
+
+3. Choose the **Fullscreen** option in the Preview pane, so you don't get the "phone in a phone" effect.
+
 ## Installing with Bower
 
 You can use [bower](http://bower.io) to install and keep the templates up to date:

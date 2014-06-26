@@ -1,10 +1,10 @@
 {
   "name": "framer-templates",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "A collection of device templates for Framer",
+  "main": "templates/iphone-5c-blue.js",
   "directories": {
-    "example": "example"
+    "templates": "templates"
   },
   "dependencies": {
     "datauri": "~0.5.5",
@@ -14,6 +14,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Tisho Georgiev",
   "license": "BSD-2-Clause"
 }

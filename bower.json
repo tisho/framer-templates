@@ -1,6 +1,6 @@
 {
   "name": "framer-templates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "templates/iphone-5c-blue.js",
   "license": "MIT",
   "ignore": [
