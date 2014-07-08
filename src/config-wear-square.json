@@ -1,0 +1,17 @@
+{
+  "backgroundImage": "",
+  "preventBounce": true,
+  "shouldShowAddToHomescreenPrompt": false,
+  "deviceWidth": 512,
+  "deviceHeight": 512,
+  "screenWidth": 186,
+  "screenHeight": 186,
+  "contentWidth": 186,
+  "contentHeight": 186,
+  "cursorWidth": 66,
+  "deviceImage": "images/wear-square.png",
+  "cursorImage1x": "images/cursor.png",
+  "cursorImage2x": "images/cursor@2x.png",
+  "cursorPressedImage1x": "images/cursor-pressed.png",
+  "cursorPressedImage2x": "images/cursor-pressed@2x.png"
+}
