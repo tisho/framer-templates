@@ -36,6 +36,8 @@
   * [iPad Mini (Black, Landscape)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/ipad-mini-black-landscape.js)
   * [Nexus 5 (Portrait)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/nexus-5.js)
   * [Nexus 5 (Landscape)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/nexus-5-landscape.js)
+  * [Android Wear (Circle)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/wear-circle.js)
+  * [Android Wear (Square)](https://raw.githubusercontent.com/tisho/framer-templates/master/templates/wear-square.js)
 
 2. Open your `index.html` in a text editor and link to the template using a `<script>` tag. The template should be included *after* the `framer.js` script:
 
@@ -220,3 +222,4 @@ The newly generated template will appear under the `templates/` directory.
 * [iPhone 5s & 5c PSD](http://dribbble.com/shots/1239144-iPhone-5s-iPhone-5c-PSD) by Louie Mantia
 * [Nexus 5 PSD](http://dribbble.com/shots/1294040-Free-Nexus-5-PSD) by Victor Stuber
 * [Bobble Cursor Image](https://github.com/joshpuckett/FramerWebView/blob/master/img/bobble.png) from Josh Puckett's [FramerWebView](https://github.com/joshpuckett/FramerWebView)
+* Android Wear templates by [Patrick Keenan](https://github.com/patrickkeenan)
