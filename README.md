@@ -84,7 +84,7 @@ If you're upgrading from a Framer 2 template, everything should work as expected
 The default background image is a plain off-white color, but if that's not to your tastes, you can use your own by specifying it as a template option before you load the template:
 
 ```html
-<script>Framer.Config.template = { backgroundImage: '[url to your background image]' };</script>
+<script>FramerTemplateConfig = { backgroundImage: '[url to your background image]' };</script>
 <script src="iphone-5s-white.js"></script>
 ```
 
@@ -95,7 +95,7 @@ The default background image is a plain off-white color, but if that's not to yo
 The templates have built-in capability for reminding users that view your prototype inside a mobile browser to add it to their homescreen for a more app-like experience. This feature is off by default, but you can turn it on like this:
 
 ```html
-<script>Framer.Config.template = { shouldShowAddToHomescreenPrompt: true };</script>
+<script>FramerTemplateConfig = { shouldShowAddToHomescreenPrompt: true };</script>
 <script src="iphone-5s-white.js"></script>
 ```
 
