@@ -28,13 +28,13 @@ layerA.draggable.enabled = true;
 
 /* Add an animation to the end of a drag */
 
-layerA.on(Events.DragStart, function(event, layer) {
+layerA.on(Events.DragStart, function(event) {
   this.animate({ properties: { scale: 1.2 }, curve: 'spring(400,20,20)' });
-})
+});
 
-layerA.on(Events.DragEnd, function(event, layer) {
+layerA.on(Events.DragEnd, function(event) {
   /* Snap back to origin */
-  layer.animate({
+  this.animate({
     properties: {
       scale: 1,
       x: originX,

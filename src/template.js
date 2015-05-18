@@ -1,6 +1,14 @@
 (function() {
   var defaults = <% template_defaults %>;
-  var options = _.defaults(Framer.Config.template || {}, defaults);
+  var userConfiguredDefaults = {};
+  if (window.FramerTemplateConfig) {
+    userConfiguredDefaults = FramerTemplateConfig;
+  } else if ('Config' in Framer && typeof(Framer.Config) !== 'undefined') {
+    // Legacy Framer/templates
+    userConfiguredDefaults = Framer.Config.template;
+  }
+
+  var options = _.defaults(userConfiguredDefaults, defaults);
 
   var body,
       isMobile = navigator.userAgent.match(/(iPad|iPhone|Android)/),
@@ -116,7 +124,14 @@
   }
 
   function positionFramerRoot() {
-    root = document.getElementById('FramerRoot');
+    if (Framer.DefaultContext) {
+      // Framer 3+
+      root = Framer.DefaultContext._rootElement;
+    } else {
+      // Legacy Framer
+      root = document.getElementById('FramerRoot');
+    }
+
     if (!root) {
       return setTimeout(positionFramerRoot, 10);
     }
