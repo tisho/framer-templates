@@ -1,6 +1,6 @@
 {
   "name": "framer-templates",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A collection of device templates for Framer",
   "main": "templates/iphone-5c-blue.js",
   "directories": {
