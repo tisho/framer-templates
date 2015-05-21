@@ -181,6 +181,18 @@
     root.classList.add('framer-template-positioned');
 
     document.body.style.minHeight = (deviceHeight * scale + 2 * sidePadding)+'px';
+
+    if (Framer.Device) {
+      Framer.Device.fullScreen = true;
+      Framer.Device.contentScale = 1;
+      Framer.Device.deviceScale = 1;
+
+      var deviceLayers = [Framer.Device.background, Framer.Device.phone, Framer.Device.viewport, Framer.Device.content, Framer.Device.screen];
+      for (var i=0, l=deviceLayers.length; i < l; i++) {
+        deviceLayers[i].width = contentWidth;
+        deviceLayers[i].height = contentHeight;
+      }
+    }
   }
 
   function togglePresentationMode() {

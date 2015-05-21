@@ -1,8 +1,8 @@
 var bg, layerA, originX, originY;
 
 bg = new Layer({
-  width: 640,
-  height: 1136,
+  width: 256,
+  height: 256,
   backgroundColor: '#456'
 });
 
